@@ -7,7 +7,7 @@ async function query(queryObject) {
   if (process.env.DATABASE_URL) {
     client = new Client({
       connectionString: process.env.DATABASE_URL,
-      ssl: process.env.NODE_ENV === "production" ? true : false,
+      ssl: getSSLValues(),
     });
   } else {
     client = new Client({
@@ -34,3 +34,12 @@ async function query(queryObject) {
 export default {
   query: query,
 };
+
+function getSSLValues() {
+  if (process.env.NODE_ENV === "production") {
+    return {
+      rejectUnauthorized: false,
+    };
+  }
+  return false;
+}
