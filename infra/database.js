@@ -25,7 +25,12 @@ async function query(queryObject) {
 }
 
 async function getNewClient() {
-  const client = new Client({
+  const client = process.env.DATABASE_URL ?
+  new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: getSSLValues(),
+  }) :
+  new Client({
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
     user: process.env.POSTGRES_USER,
