@@ -3,20 +3,13 @@ import { Client } from "pg";
 async function query(queryObject) {
   let client;
 
-  // Suporta connection string do Neon (DATABASE_URL) ou variáveis individuais
   if (process.env.DATABASE_URL) {
     client = new Client({
       connectionString: process.env.DATABASE_URL,
       ssl: getSSLValues(),
     });
   } else {
-    client = new Client({
-      host: process.env.DATABASE_HOST,
-      port: process.env.DATABASE_PORT,
-      user: process.env.POSTGRES_USER,
-      database: process.env.POSTGRES_DB,
-      password: process.env.POSTGRES_PASSWORD,
-    });
+    client = await getNewClient();
   }
 
   try {
@@ -31,8 +24,23 @@ async function query(queryObject) {
   }
 }
 
+async function getNewClient() {
+  const client = new Client({
+    host: process.env.DATABASE_HOST,
+    port: process.env.DATABASE_PORT,
+    user: process.env.POSTGRES_USER,
+    database: process.env.POSTGRES_DB,
+    password: process.env.POSTGRES_PASSWORD,
+    ssl: getSSLValues(),
+  });
+
+  await client.connect();
+  return client;
+}
+
 export default {
-  query: query,
+  query,
+  getNewClient,
 };
 
 function getSSLValues() {
