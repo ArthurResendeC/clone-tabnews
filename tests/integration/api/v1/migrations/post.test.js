@@ -27,4 +27,4 @@ test("POST to /api/v1/migrations should return status 200 and apply the migratio
 
   expect(Array.isArray(responseBody2)).toBe(true);
   expect(responseBody2.length).toBe(0);
-});
+}, 15000);

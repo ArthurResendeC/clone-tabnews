@@ -34,6 +34,7 @@ export default async function migrations(request, response) {
     }
     return response.status(200).json(appliedMigrations);
   }
-
-  return response.status(405).json({ message: "Method not allowed" }).end();
+  console.log("Passou direto");
+  await dbClient.end();
+  return response.status(405).json({ message: "Method not allowed" });
 }
