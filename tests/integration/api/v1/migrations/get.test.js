@@ -1,10 +1,12 @@
 import database from "infra/database";
+import orchestrator from "tests/orchestrator";
 
 async function cleadDatabase() {
   await database.query("drop schema public cascade; create schema public;");
 }
 
 beforeAll(async () => {
+  await orchestrator.waitForAllServices();
   await cleadDatabase();
 });
 
