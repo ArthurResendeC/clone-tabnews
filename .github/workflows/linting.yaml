@@ -3,32 +3,32 @@ name: Linting
 on: pull_request
 
 jobs:
-  prettier:
-    name: Prettier
+  oxfmt:
+    name: Oxfmt
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "lts/hydrogen"
+          node-version: "22"
 
       - run: npm ci
 
-      - run: npm run lint:prettier:check
-  eslint:
-    name: Eslint
+      - run: npm run lint:oxfmt:check
+  oxlint:
+    name: Oxlint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "lts/hydrogen"
+          node-version: "22"
 
       - run: npm ci
 
-      - run: npm run lint:eslint:check
+      - run: npm run lint:oxlint:check -- --format=github
   commitlint:
     name: Commitlint
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "lts/hydrogen"
+          node-version: "22"
 
       - run: npm ci
 
