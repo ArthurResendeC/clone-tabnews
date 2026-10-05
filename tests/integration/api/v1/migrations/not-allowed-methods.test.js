@@ -1,13 +1,8 @@
-import database from "infra/database";
 import orchestrator from "tests/orchestrator.js";
-
-async function cleanDatabase() {
-  database.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;");
-}
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
-  await cleanDatabase();
+  await orchestrator.clearDatabase();
 });
 
 describe("Not allowed methods to /api/v1/migrations", () => {
