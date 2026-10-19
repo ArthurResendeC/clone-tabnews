@@ -1,6 +1,6 @@
 import useSWR from "swr";
 
-async function featchAPI(key) {
+async function fetchAPI(key) {
   const response = await fetch(key);
   const responseBody = await response.json();
   return responseBody;
@@ -17,7 +17,7 @@ export default function StatusPage() {
 }
 
 function UpdatedAt() {
-  const { data, isLoading } = useSWR("/api/v1/status", featchAPI, {
+  const { data, isLoading } = useSWR("/api/v1/status", fetchAPI, {
     refreshInterval: 2000,
   });
 
@@ -29,7 +29,7 @@ function UpdatedAt() {
 }
 
 function Database() {
-  const { data, isError, isLoading } = useSWR("/api/v1/status", featchAPI, {
+  const { data, isError, isLoading } = useSWR("/api/v1/status", fetchAPI, {
     refreshInterval: 2000,
   });
   return (
